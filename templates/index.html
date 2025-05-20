@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Post Auto Editor API</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #0077B5;
+            border-bottom: 2px solid #0077B5;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #0077B5;
+            margin-top: 30px;
+        }
+        .endpoint {
+            background-color: #f5f5f5;
+            border-left: 4px solid #0077B5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .endpoint h3 {
+            margin-top: 0;
+            color: #0077B5;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .method {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .get {
+            background-color: #61affe;
+            color: white;
+        }
+        .post {
+            background-color: #49cc90;
+            color: white;
+        }
+        .url {
+            font-weight: bold;
+        }
+        .try-it {
+            margin-top: 15px;
+        }
+        .try-it a {
+            display: inline-block;
+            background-color: #0077B5;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .try-it a:hover {
+            background-color: #005582;
+        }
+    </style>
+</head>
+<body>
+    <h1>LinkedIn Post Auto Editor API</h1>
+    <p>
+        This API provides endpoints for generating customized offer posters and retrieving exchange rates.
+        Below are the available endpoints and examples of how to use them.
+    </p>
+    
+    <div style="margin: 20px 0; padding: 15px; background-color: #e6f3ff; border-radius: 4px;">
+        <h3 style="margin-top: 0;">Try it yourself!</h3>
+        <p>Use our <a href="/form" style="color: #0077B5; font-weight: bold;">interactive form</a> to generate a poster without writing any code.</p>
+    </div>
+
+    <h2>API Endpoints</h2>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> <span class="url">/api/exchange-rates</span></h3>
+        <p>Get all available exchange rates.</p>
+        <h4>Response Example:</h4>
+        <pre><code>{
+  "CNY": 7.2345,
+  "EUR": 0.9123,
+  "GBP": 0.7890,
+  "JPY": 110.4567,
+  "CAD": 1.2345,
+  "AUD": 1.3456,
+  "INR": 73.4567
+}</code></pre>
+        <div class="try-it">
+            <a href="/api/exchange-rates" target="_blank">Try it</a>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> <span class="url">/api/exchange-rate/{currency_code}</span></h3>
+        <p>Get exchange rate for a specific currency.</p>
+        <h4>Parameters:</h4>
+        <ul>
+            <li><code>currency_code</code> - Currency code (e.g., CNY, EUR, GBP)</li>
+        </ul>
+        <h4>Response Example:</h4>
+        <pre><code>{
+  "currency": "CNY",
+  "rate": 7.2345,
+  "description": "Chinese Yuan"
+}</code></pre>
+        <div class="try-it">
+            <a href="/api/exchange-rate/CNY" target="_blank">Try CNY</a>
+            <a href="/api/exchange-rate/EUR" target="_blank">Try EUR</a>
+            <a href="/api/exchange-rate/GBP" target="_blank">Try GBP</a>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> <span class="url">/api/generate-poster</span></h3>
+        <p>Generate an offer poster with the provided information.</p>
+        <h4>Request Body:</h4>
+        <pre><code>{
+  "recipient_name": "John Doe",
+  "offer_amount": "10,000",
+  "team_name": "Engineering",
+  "team_name2": "Product"  // Optional second team
+}</code></pre>
+        <h4>Response:</h4>
+        <p>The generated poster image file (PNG)</p>
+        <h4>Example curl command:</h4>
+        <pre><code>curl -X POST http://localhost:5000/api/generate-poster ^
+  -H "Content-Type: application/json" ^
+  -d "{\"recipient_name\": \"John Doe\", \"offer_amount\": \"10,000\", \"team_name\": \"Engineering\"}" ^
+  --output poster.png</code></pre>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> <span class="url">/api/cleanup</span></h3>
+        <p>Clean up old generated files.</p>
+        <h4>Request Body:</h4>
+        <pre><code>{
+  "max_age_hours": 24  // Optional, default is 24 hours
+}</code></pre>
+        <h4>Response Example:</h4>
+        <pre><code>{
+  "success": true,
+  "deleted_count": 5,
+  "message": "Deleted 5 old files from /path/to/generated_images"
+}</code></pre>
+    </div>
+
+    <h2>Testing the API</h2>
+    <p>
+        You can use the included <code>test_api.py</code> script to test the API functionality:
+    </p>
+    <pre><code>python test_api.py --url http://localhost:5000 --test all</code></pre>
+    <p>
+        This will test all endpoints and save a sample generated poster to <code>test_poster.png</code>.
+    </p>
+</body>
+</html> 

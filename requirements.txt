@@ -1,0 +1,10 @@
+flask>=2.0.1
+pillow>=8.3.1
+requests>=2.26.0
+pandas>=2.0.3
+werkzeug>=2.0.0
+psd-tools>=1.9.24
+gunicorn>=20.1.0
+python-dotenv>=0.20.0
+boto3>=1.24.0
+pymongo>=4.1.1 

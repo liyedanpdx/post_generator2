@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+
+# 环境文件
+.env
+
+# 生成的图片文件夹
+services/generated_images/*
+
+# 缓存和临时文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+
+# Docker相关
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# 测试和文档
+tests/
+docs/
+*.md
+test_api.sh
+
+# 编辑器相关
+.vscode/
+.idea/
+*.swp
+*.swo 
